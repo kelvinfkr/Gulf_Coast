@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>jsbayes discrete bayesian belief network visualization and interaction example</title>
+    <style>
+      svg { border: 1px solid black; }
+      svg g rect.node-shape { border-radius: 5px !important; fill:#ffecb3 !important; cursor: move; }
+      svg g text.node-name { font-weight: 800 !important }
+      svg g rect.node-bar { fill: green !important }
+      svg g text.node-value { fill:rgb(0,0,0) !important; font-size: 15px; cursor: pointer; }
+      svg line.edge-line { stroke:rgb(0,0,0) !important }
+      svg path.edge-head { fill:rgb(0,0,0) !important }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
+    <script src="https://cdn.jsdelivr.net/lodash/4.11.1/lodash.js"></script>
+    <script src="https://rawgithub.com/cpettitt/graphlib/master/dist/graphlib.core.js"></script>
+    <script src="https://rawgithub.com/cpettitt/dagre/master/dist/dagre.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://rawgithub.com/vangj/jsbayes/master/jsbayes.js"></script>
+    <script src="https://rawgithub.com/vangj/jsbayes-viz/master/jsbayes-viz.js"></script>
+    <script>
+      function getGraph() {
+        var graph = jsbayes.newGraph();
+        graph.saveSamples = true;
+        var n1 = graph.addNode('Party', ['1','2','3']);
+        var n2 = graph.addNode('Information', ['1','2','3','4']);
+
+        var n6 = graph.addNode('Age', ['1','2','3','4','5','6']);
+        //var n9 = graph.addNode('Local Attitude',['1','2','3']);
+
+        var n3 = graph.addNode('Race', ['1', '2','3']);
+        var n7 = graph.addNode('Gender',['male','female']);
+        var n4 = graph.addNode('Education', ['1', '2','3']);
+        var n12 = graph.addNode('Governmental Support',['1','2','3','4']);
+        var n8 = graph.addNode('Climate Recognition',['1','2','3']);
+        var n5 = graph.addNode('Year Stayed', ['1', '2', '3', '4']);
+
+        n3.addParent(n6);
+        n4.addParent(n7);
+        n2.addParent(n1);
+        n2.addParent(n3);
+        n1.addParent(n7);
+        n12.addParent(n1);
+        n8.addParent(n1);
+        n8.addParent(n2);
+        n8.addParent(n4);
+        //n9.addParent(n1);
+        //n9.addParent(n2);
+        //n9.addParent(n5);
+
+        n5.setCpt([  0.021784232 ,0.074429461 ,0.309387967 ,0.59439834  ]);
+
+        n6.setCpt([0.129149377593361,0.177904564315353,0.170902489626556,0.198910788381743,0.155342323651452,0.167790456431535]);
+
+        n7.setCpt([0.480809128630705,0.519190871369295]);
+        
+        n1.setCpt([[ 0.273462783171521,0.498921251348436,0.227615965480043],
+        [0.207292707292707, 0.404595404595405, 0.388111888111888 ]]);
+        n3.setCpt([[  0.341365462 , 0.373493976 , 0.285140562 ],
+        [ 0.517492711 , 0.167638484 , 0.314868805 ],
+        [ 0.323216995 , 0.168437026 , 0.508345979 ],
+        [ 0.185136897 , 0.112125163 , 0.70273794  ],
+        [ 0.185308848 , 0.21869783 , 0.595993322 ],
+        [ 0.14064915  , 0.091190108 , 0.768160742 ]]);
+        n2.setCpt([[  0.172413793 , 0.318965517 , 0.275862069 , 0.232758621 ],
+        [ 0.058823529 , 0.352941176 , 0.117647059 , 0.470588235 ],
+        [ 0.247409326 , 0.191709845 , 0.414507772 , 0.146373057 ],
+        [ 0.117559524 , 0.31547619  , 0.254464286 , 0.3125  ],
+        [ 0.265625  , 0.15234375  , 0.09375 , 0.48828125  ],
+        [ 0.252788104 , 0.285006196 , 0.285006196 , 0.177199504 ],
+        [ 0.054421769 , 0.173469388 , 0.557823129 , 0.214285714 ],
+        [ 0.168341709 , 0.133165829 , 0.399497487 , 0.298994975 ],
+        [ 0.244575937 , 0.145956607 , 0.420118343 , 0.189349112 ]]);
+        
+        n4.setCpt([[  0.040453074 , 0.598705502 , 0.360841424 ],
+        [ 0.015984016 , 0.708791209 , 0.275224775 ]]);
+        
+        n12.setCpt([[ 0 , 0.197580645 , 0.27016129  , 0.532258065 ],[ 0 , 0.277989822 , 0.33778626  , 0.384223919 ],[ 0 , 0.218181818 , 0.149350649, 0.632467532 ]]);
+
+        n8.setCpt([[  1 , 0 , 0 ],[ 0.639534884 , 0.174418605 , 0.186046512 ],[ 0.795275591 , 0.165354331 , 0.039370079 ],[ 1 , 0 , 0 ],[ 0.634408602 , 0.258064516 , 0.107526882 ],[ 0.62244898  , 0.336734694 , 0.040816327 ],[ 0 , 0 , 1 ],[ 0.223463687 , 0.553072626 , 0.223463687 ],[ 0.602272727 , 0.301136364 , 0.096590909 ],[ 0 , 0 , 1 ],[ 0.4625  , 0.2875  , 0.25  ],[ 0.616438356 , 0.191780822 , 0.191780822 ],[ 1 , 0 , 0 ],[ 0.412060302 , 0.507537688 , 0.08040201  ],[ 0.5 , 0.427631579 , 0.072368421 ],[ 0 , 0 , 1 ],[ 0.188295165 , 0.381679389 , 0.430025445 ],[ 0.61627907  , 0.290697674 , 0.093023256 ],[ 0 , 1 , 0 ],[ 0.242214533 , 0.591695502 , 0.166089965 ],[ 0.365671642 , 0.5 , 0.134328358 ],[ 0.015873016 , 0.873015873 , 0.111111111 ],[ 0.424068768 , 0.297994269 , 0.277936963 ],[ 0.590909091 , 0.227272727 , 0.181818182 ],[ 1 , 0 , 0 ],[ 0.261538462 , 0.469230769 , 0.269230769 ],[ 0.285714286 , 0.558441558 , 0.155844156 ],[ 0 , 0 , 1 ],[ 0.158333333 , 0.533333333 , 0.308333333 ],[ 0.333333333 , 0.561403509 , 0.105263158 ],[ 0.1875  , 0 , 0.8125  ],[ 0.405612245 , 0.474489796 , 0.119897959 ],[ 0.3125  , 0.5546875 , 0.1328125 ],[ 0.230769231 , 0 , 0.769230769 ],[ 0.283105023 , 0.506849315 , 0.210045662 ],[ 0.260869565 , 0.5 , 0.239130435 ]]);
+
+        //n9.setCpt([[1 , 0 , 0 ],[0.1,0.2,0.7],[0.3,0.5,0.2],[1 , 0 , 0 ],[0.1,0.2,0.7],[0.3,0.5,0.2],[  1 , 0 , 0 ],[0.1,0.2,0.7],[0.3,0.5,0.2],[  1 , 0 , 0 ],[0.1,0.2,0.7],[0.3,0.5,0.2]]);
+
+
+        graph.sample(200000);
+        
+        var g = jsbayesviz.fromGraph(graph);
+        return g;
+      }
+      
+      $(document).ready(function() {
+        (function(window) { 
+          var graph = getGraph();
+          jsbayesviz.draw({
+            id: '#bbn',
+            width: 1200,
+            height: 1200,
+            graph: graph,
+            samples: 15000
+          });
+          
+          $('#btnDownloadJson').click(function() {
+            jsbayesviz.downloadSamples(graph, true);
+          });
+          
+          $('#btnDownloadCsv').click(function() {
+            jsbayesviz.downloadSamples(graph, false, { rowDelimiter: '\n', fieldDelimiter: ',' });
+          });
+        })(window);
+      });
+    </script>
+  </head>
+
+  <body>
+    <svg id="bbn">
+    </svg>
+    <div>
+      <button id="btnDownloadJson">download samples as json</button>
+      <button id="btnDownloadCsv">download samples as csv</button>
+    </div>
+  </body>
+
+</html>
