@@ -2,7 +2,7 @@
 <html>
 
   <head>
-    <title>jsbayes discrete bayesian belief network visualization and interaction example</title>
+    <title>Gulf_Coast_Data_Visualization</title>
     <style>
       svg { border: 1px solid black; }
       svg g rect.node-shape { border-radius: 5px !important; fill:#ffecb3 !important; cursor: move; }
@@ -74,7 +74,7 @@
         n18.addParent(n17);
         n19.addParent(n16);
         n19.addParent(n17);
-        
+
         n19.setCpt([[ 0.322580645 , 0.677419355 , 0 ],
 [ 0 , 1 , 0 ],
 [ 0 , 0.152777778 , 0.847222222 ],
@@ -589,9 +589,11 @@
   </head>
 
   <body>
+    <A href="javascript:history.go(0)">Refresh If You Want To Reinitiate This Model</A>
     <svg id="bbn">
     </svg>
     <div>
+
       <button id="btnDownloadJson">download samples as json</button>
       <button id="btnDownloadCsv">download samples as csv</button>
     </div>
