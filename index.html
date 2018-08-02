@@ -24,26 +24,26 @@
         var graph = jsbayes.newGraph();
         graph.saveSamples = true;
 
-        var n1 = graph.addNode('Party', ['1', '2','3']);
-        var n2 = graph.addNode('Information', ['1','2','3','4']);
-        var n3 = graph.addNode('Race', ['1', '2','3']);
-        var n4 = graph.addNode('Education', ['1', '2','3']);
-        var n5 = graph.addNode('Year_Stayed', ['1', '2', '3', '4']);
-        var n6 = graph.addNode('Age', ['1','2','3','4','5','6']);
-        var n7 = graph.addNode('Gender',['male','female']);
-        var n8 = graph.addNode('Climate_Recognition',['1','2','3']);
-        var n9 = graph.addNode('Local_Attitude',['a','b','c']);
-        var n11 = graph.addNode('Imm_family',['1','2','3','4','5']);
-        var n12 = graph.addNode('Gov_Preparation',['1','2','3','4']);
-        var n14 = graph.addNode('Reason To Buy',['Not Buying','Compulsory','Willing','Both']);
-        var n15 = graph.addNode('Flood zone',['1','2','3','4']);
-        var n13 = graph.addNode('Buy',['No','Yes']);
-        var n17 = graph.addNode('Private',['1','2','3','4','5','6','7']);
-        var n16 = graph.addNode('Public',['1','2','3','4','5','6','7']);
+        var n1 = graph.addNode('1.Party', ['Republican', 'Independent','Democrat']);
+        var n2 = graph.addNode('2.Information', ['Not Informed','Not Very Well','Somewhat Well','Very Well']);
+        var n3 = graph.addNode('3.Race', ['White', 'Black','Other']);
+        var n4 = graph.addNode('4.Education', ['1', '2','3']);
+        var n5 = graph.addNode('5.Year_Stayed', ['1', '2', '3', '4']);
+        var n6 = graph.addNode('6.Age', ['18-24','25-34','35-44','45-54','55-64','>65']);
+        var n7 = graph.addNode('7.Gender',['male','female']);
+        var n8 = graph.addNode('8.Climate_Recognition',['1','2','3']);
+        var n9 = graph.addNode('9.Local_Attitude',['a','b','c']);
+        var n11 = graph.addNode('11.Imm_family',['1','2','3','4','5']);
+        var n12 = graph.addNode('12.Gov_Preparation',['1','2','3','4']);
+        var n14 = graph.addNode('14.Reason To Buy',['Not Buying','Compulsory','Willing','Both']);
+        var n15 = graph.addNode('15.Flood zone',['1','2','3','4']);
+        var n13 = graph.addNode('13.Buy',['No','Yes']);
+        var n16 = graph.addNode('16.Private',['1','2','3','4','5','6','7']);
+        var n17 = graph.addNode('17.Public',['1','2','3','4','5','6','7']);
 
-        var n10 = graph.addNode('Local Community',['1','2','3','4','5']);
-        var n18 = graph.addNode('Sup_Climate',['Not Support','Independent','Support']);
-        var n19 = graph.addNode('Sup_Gov',['Public','Independent','Private']);
+        var n10 = graph.addNode('10.Local Community',['1','2','3','4','5']);
+        var n18 = graph.addNode('18.Sup_Climate',['Not Support','Independent','Support']);
+        var n19 = graph.addNode('19.Sup_Gov',['Private','Independent','Public']);
  
         n1.addParent(n6);
         n1.addParent(n7);
@@ -559,7 +559,7 @@
 [ 0.015730337 , 0.073033708 , 0.257303371 , 0.470786517 , 0.183146067 ],
 [ 0.005235602 , 0.013089005 , 0.408376963 , 0.167539267 , 0.405759162 ]]);
 
-        graph.sample(2000000);
+        graph.sample(1000000);
         
         var g = jsbayesviz.fromGraph(graph);
         return g;
